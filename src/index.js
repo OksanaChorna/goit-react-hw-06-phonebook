@@ -5,11 +5,12 @@ import { Provider } from 'react-redux';
 import 'modern-normalize/modern-normalize.css';
 import './index.css';
 import App from './App';
+import store from './store/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider>
+      <Provider store={store}>
         <App />
       </Provider>
     </BrowserRouter>
