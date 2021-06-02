@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/contacts/contacts-actions';
 import PropsType from 'prop-types';
 import style from './ContactsForm.module.css';
 import shortid from 'shortid';
@@ -24,13 +26,16 @@ class ContactsForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const contact = {
-      id: shortid.generate(),
-      name: this.state.name,
-      number: this.state.number,
-    };
 
-    this.props.onSubmit(contact);
+    const hasContacts = contact =>
+      contact.name === this.state.name || contact.number === this.state.number;
+
+    if (this.props.items.some(hasContacts)) {
+      alert(`Contact is already in contacts`);
+      return;
+    }
+
+    this.props.onSubmit({ ...this.state });
 
     this.reset();
   };
@@ -82,4 +87,13 @@ ContactsForm.PropsType = {
   onSubmit: PropsType.func.isRequired,
 };
 
-export default ContactsForm;
+const mapStateToProps = state => ({
+  items: state.contacts.items,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSubmit: ({ name, number }) =>
+    dispatch(actions.addContact({ name, number })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsForm);

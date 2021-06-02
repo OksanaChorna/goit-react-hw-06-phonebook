@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ContactsForm from './components/ContactsForm';
 import ContactsList from './components/ContactsList/ContactsList';
+import ContactItem from './components/ContactsList/ContactsListItem';
 import Container from './components/Container';
 import Filter from './components/Filter/Filter';
 
@@ -30,63 +32,65 @@ class App extends Component {
     }
   }
 
-  handleChange = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
-  };
+  // handleChange = event => {
+  //   const { name, value } = event.currentTarget;
+  //   this.setState({ [name]: value });
+  // };
 
-  addContact = contact => {
-    if (!this.hasContacts(contact.name)) {
-      this.setState(({ contacts }) => ({
-        contacts: [contact, ...contacts],
-      }));
-    } else {
-      alert(`${contact.name} is already in contacts`);
-    }
-  };
+  // addContact = contact => {
+  //   if (!this.hasContacts(contact.name)) {
+  //     this.setState(({ contacts }) => ({
+  //       contacts: [contact, ...contacts],
+  //     }));
+  //   } else {
+  //     alert(`${contact.name} is already in contacts`);
+  //   }
+  // };
 
-  hasContacts = name => {
-    return this.state.contacts.find(contact => {
-      return contact.name.toLocaleLowerCase() === name.toLocaleLowerCase();
-    });
-  };
+  // hasContacts = name => {
+  //   return this.state.contacts.find(contact => {
+  //     return contact.name.toLocaleLowerCase() === name.toLocaleLowerCase();
+  //   });
+  // };
 
-  findContact = () => {
-    const { filter, contacts } = this.state;
-    const normalizedFilter = filter.toLocaleLowerCase();
+  // findContact = () => {
+  //   const { filter, contacts } = this.state;
+  //   const normalizedFilter = filter.toLocaleLowerCase();
 
-    if (filter.length) {
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(normalizedFilter),
-      );
-    } else {
-      return contacts;
-    }
-  };
+  //   if (filter.length) {
+  //     return contacts.filter(contact =>
+  //       contact.name.toLowerCase().includes(normalizedFilter),
+  //     );
+  //   } else {
+  //     return contacts;
+  //   }
+  // };
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
-  };
+  // deleteContact = contactId => {
+  //   this.setState(prevState => ({
+  //     contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+  //   }));
+  // };
 
   render() {
     return (
       <Container>
         <h1>PhoneBook</h1>
-        <ContactsForm onSubmit={this.addContact} />
-
+        <ContactsForm />
         <div>
           <h2>Contacts</h2>
-          <Filter value={this.state.filter} onChange={this.handleChange} />
-          <ContactsList
-            findContact={this.findContact}
-            onDeleteContact={this.deleteContact}
-          />
+          <Filter />
+          <ContactsList>
+            <ContactItem />
+          </ContactsList>
         </div>
       </Container>
     );
   }
 }
+
+// const mapStateToProps = state => ({
+//   items: state.contacts.items,
+// });
 
 export default App;

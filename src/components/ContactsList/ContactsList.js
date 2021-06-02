@@ -1,11 +1,11 @@
-import ContactItem from './ContactsListItem';
+// import ContactItem from './ContactsListItem';
 import PropTypes from 'prop-types';
 import style from './ContactsList.module.css';
 
-const ContactsList = ({ findContact, onDeleteContact }) => {
-  return (
-    <ul className={style.contactList}>
-      {findContact().map(({ id, name, number }) => {
+const ContactsList = ({ children }) => (
+  <ul className={style.contactList}>
+    {children}
+    {/* {findContact().map(({ id, name, number }) => {
         return (
           <ContactItem
             key={id}
@@ -15,14 +15,12 @@ const ContactsList = ({ findContact, onDeleteContact }) => {
             onDeleteContact={onDeleteContact}
           />
         );
-      })}
-    </ul>
-  );
-};
+      })} */}
+  </ul>
+);
 
 ContactsList.prototype = {
-  findContact: PropTypes.func.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
 export default ContactsList;
