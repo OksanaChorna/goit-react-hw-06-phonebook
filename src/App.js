@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import ContactsForm from './components/ContactsForm';
 import ContactsList from './components/ContactsList/ContactsList';
-import ContactItem from './components/ContactsList/ContactsListItem';
+import ContactsListItem from './components/ContactsList/ContactsListItem';
 import Container from './components/Container';
 import Filter from './components/Filter/Filter';
 
@@ -17,20 +17,20 @@ class App extends Component {
     filter: '',
   };
 
-  // componentDidMount() {
-  //   const contacts = localStorage.getItem('contacts');
-  //   const parsedContacts = JSON.parse(contacts);
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
 
-  //   if (parsedContacts) {
-  //     this.setState({ contacts: parsedContacts });
-  //   }
-  // }
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   // handleChange = event => {
   //   const { name, value } = event.currentTarget;
@@ -81,7 +81,7 @@ class App extends Component {
           <h2>Contacts</h2>
           <Filter />
           <ContactsList>
-            <ContactItem />
+            <ContactsListItem />
           </ContactsList>
         </div>
       </Container>

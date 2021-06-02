@@ -33,15 +33,18 @@ ContactItem.prototype = {
   onDeleteContact: PropTypes.func,
 };
 
-const findContact = (filter, allContacts) => {
+const findContact = (allContacts, filter) => {
   const normalizedFilter = filter.toLowerCase();
 
-  return allContacts.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter),
-  );
+  if (filter) {
+    return allContacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
+  }
+  return allContacts;
 };
 
-const mapStateToProps = ({ contacts: items, filter }) => ({
+const mapStateToProps = ({ contacts: { items, filter } }) => ({
   contacts: findContact(items, filter),
 });
 
