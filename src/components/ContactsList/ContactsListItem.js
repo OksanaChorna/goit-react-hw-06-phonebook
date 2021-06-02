@@ -5,18 +5,20 @@ import style from './ContactsListItem.module.css';
 
 const ContactItem = ({ onDeleteContact, contacts }) => (
   <>
-    {contacts.map(({ id, name, number }) => (
-      <li key={id} className={style.contactItem}>
-        {name}: {number}
-        <button
-          className={style.buttonDel}
-          type="submit"
-          onClick={() => onDeleteContact(id)}
-        >
-          Delete
-        </button>
-      </li>
-    ))}
+    {contacts.map(({ id, name, number }) => {
+      return (
+        <li key={id} className={style.contactItem}>
+          {name}: {number}
+          <button
+            className={style.buttonDel}
+            type="submit"
+            onClick={() => onDeleteContact(id)}
+          >
+            Delete
+          </button>
+        </li>
+      );
+    })}
   </>
 );
 
@@ -31,10 +33,10 @@ ContactItem.prototype = {
   onDeleteContact: PropTypes.func,
 };
 
-const findContact = (filter, contacts) => {
-  const normalizedFilter = filter.toLocaleLowerCase();
+const findContact = (filter, allContacts) => {
+  const normalizedFilter = filter.toLowerCase();
 
-  return contacts.filter(contact =>
+  return allContacts.filter(contact =>
     contact.name.toLowerCase().includes(normalizedFilter),
   );
 };
@@ -47,4 +49,4 @@ const mapDispatchToProps = dispatch => ({
   onDeleteContact: id => dispatch(actions.deleteContact(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactItem);
+export default connect(null, mapDispatchToProps)(ContactItem);
